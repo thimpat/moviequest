@@ -18,8 +18,14 @@
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
+    "enzyme": "^3.11.0",
     "eslint": "^7.26.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-compat": "^3.9.0",
     "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "flow-remove-types": "^2.151.0",
     "node-sass": "4.14.1",
@@ -29,7 +35,8 @@
     "start": "react-scripts start",
     "prepublish": "react-scripts build",
     "build": "flow-remove-types src/ -d lib/",
-    "test": "react-scripts test",
+    "test:components": "react-scripts test",
+    "test": "yarn run test:components",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
@@ -49,6 +56,12 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/index.js",
+      "src/reportWebVitals.js"
     ]
   }
 }
