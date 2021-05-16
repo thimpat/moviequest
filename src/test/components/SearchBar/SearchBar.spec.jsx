@@ -1,26 +1,24 @@
 import React from "react";
-import { unmountComponentAtNode } from "react-dom";
-import { mount } from "enzyme";
+import { render, screen } from "@testing-library/react";
 
 import SearchBar from "../../../app/components/SearchBar";
 
-let container = null;
-
 describe("The SearchBar component", () => {
-  beforeEach(() => {
-    container = document.createElement("div");
-    document.body.appendChild(container);
+  it("should render a button containing the 'Search' text", () => {
+    render(<SearchBar />);
+    const linkElement = screen.getByText("Search");
+    expect(linkElement).toBeInTheDocument();
   });
 
-  afterEach(() => {
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
+  it("should render a text box containing the 'Search' text", () => {
+    render(<SearchBar />);
+    const linkElement = screen.getByPlaceholderText("Search");
+    expect(linkElement).toBeInTheDocument();
   });
 
-  it("should contain a text box containing the 'Search' text", () => {
-    const wrapper = mount(<SearchBar />);
-    const searchButton = wrapper.find("input#search-textbox").at(0).props().placeholder;
-    expect(searchButton).toEqual("Search");
+  it("should have its text box focused", () => {
+    render(<SearchBar />);
+    const linkElement = screen.getByPlaceholderText("Search");
+    expect(document.activeElement).toEqual(linkElement);
   });
 });
