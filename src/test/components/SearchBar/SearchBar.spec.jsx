@@ -19,21 +19,32 @@ describe("The SearchBar component", () => {
   it("should have its text box focused", () => {
     render(<SearchBar />);
     const linkElement = screen.getByPlaceholderText("Search");
-    expect(document.activeElement).toEqual(linkElement);
+    expect(linkElement).toHaveFocus();
   });
 
   it("should initiate a search when the search button is pressed", () => {
     render(<SearchBar />);
     // Add a text to the input
     const inputBox = screen.getByPlaceholderText("Search");
-    fireEvent.change(inputBox, { target: { value: "Good Day" } });
+    fireEvent.change(inputBox, { target: { value: "My Text" } });
     fireEvent.blur(inputBox);
 
     // Press the search button
     const searchButton = screen.getByText("Search");
     fireEvent.click(searchButton);
 
-    const linkElement = screen.getByText("Searching... Good Day");
+    const linkElement = screen.getByText("Searching... My Text");
+    expect(linkElement).toBeInTheDocument();
+  });
+
+  it("should initiate a search when the Enter key is pressed", () => {
+    render(<SearchBar />);
+    // Add a text to the input
+    const inputBox = screen.getByPlaceholderText("Search");
+    fireEvent.change(inputBox, { target: { value: "My second phrase" } });
+    fireEvent.keyDown(inputBox, { key: "Enter", keyCode: 13 });
+
+    const linkElement = screen.getByText("Searching... My second phrase");
     expect(linkElement).toBeInTheDocument();
   });
 });

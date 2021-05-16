@@ -22,7 +22,12 @@ module.exports = {
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": "off",
     "lines-between-class-members": "off",
-    "no-debugger": "error",
+    "no-debugger": "off",
     "react/react-in-jsx-scope": "off",
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
   },
 };
