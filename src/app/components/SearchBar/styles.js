@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background: yellow;
   width: 100%;
+
+  .navbar-brand {
+    user-select: contain;
+  }
 `;

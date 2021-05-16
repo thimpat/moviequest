@@ -5,13 +5,14 @@ function SearchBar() {
   return (
     <Container>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">Movie Quest</Navbar.Brand>
+        <Navbar.Brand id="app-name">Movie Quest</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto"></Nav>
+        <Navbar.Collapse>
+          <Nav className="mr-auto" />
           <Form inline>
             <FormControl
               id="search-textbox"
+              autoFocus
               data-testid="search-textbox"
               type="text"
               placeholder="Search"
