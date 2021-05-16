@@ -1,22 +1,47 @@
 import { Container } from "./styles";
 import { Button, Form, FormControl, Nav, Navbar } from "react-bootstrap";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { doSearch, extractResult } from "../../helpers/tmdb";
+import DataContext from "../../context/DataContext";
 
 function SearchBar() {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [currentTextBoxContent, setCurrentTextBoxContent] = useState("");
   const [isSearchInitiated, setIsSearchInitiated] = useState(false);
 
-  const onStartSearch = () => {
+  const { setEntries } = useContext(DataContext);
+
+  const onStartSearch = async () => {
     setCurrentTextBoxContent(searchPhrase);
     setIsSearchInitiated(true);
   };
 
-  const onKeyDown = keyCode => {
+  const onKeyDown = async keyCode => {
     if (keyCode === 13) {
-      onStartSearch();
+      await onStartSearch();
     }
   };
+
+  const populatePage = response => {
+    setIsSearchInitiated(false);
+    const results = extractResult(response);
+    setEntries(results);
+    return true;
+  };
+
+  useEffect(() => {
+    if (!isSearchInitiated) {
+      return;
+    }
+
+    doSearch(searchPhrase)
+      .then(populatePage)
+      .catch(e => console.error(e));
+
+    return () => {
+      // TODO: Cancel request ...
+    };
+  }, [isSearchInitiated]);
 
   return (
     <Container>
