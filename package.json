@@ -35,7 +35,7 @@
     "start": "react-scripts start",
     "prepublish": "react-scripts build",
     "build": "flow-remove-types src/ -d lib/",
-    "test:components": "react-scripts test",
+    "test:components": "react-scripts test --coverage --watchAll=false",
     "test": "yarn run test:components",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
