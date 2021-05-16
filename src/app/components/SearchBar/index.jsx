@@ -12,6 +12,12 @@ function SearchBar() {
     setIsSearchInitiated(true);
   };
 
+  const onKeyDown = keyCode => {
+    if (keyCode === 13) {
+      onStartSearch();
+    }
+  };
+
   return (
     <Container>
       <Navbar bg="light" expand="lg">
@@ -29,6 +35,7 @@ function SearchBar() {
               placeholder="Search"
               className="mr-sm-2"
               onChange={e => setSearchPhrase(e.target.value)}
+              onKeyDown={e => onKeyDown(e.keyCode)}
             />
             <Button
               id="search-button"
