@@ -1,8 +1,43 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  margin-top: 56px;
   width: 100%;
+
+  .text-box {
+    margin-bottom: 40px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  h1 {
+    color: #3d3c3c;
+    margin: 20px;
+  }
+
+  h1 {
+    font-size: 8vw;
+    font-weight: 900;
+    background-color: #000;
+    color: #fff;
+    display: block;
+    padding: 0.5em;
+  }
+
+  h1:nth-child(2) {
+    position: absolute;
+    background-color: #fff;
+    color: #000;
+    clip-path: inset(
+      -1% -1% 50% -1%
+    ); // Added the negative values to prevent icky "bleed" in Chrome
+  }
+
+  h2 {
+    margin-top: 56px;
+    padding: 20px;
+  }
 
   .card-wrapper {
     margin-bottom: 20px;

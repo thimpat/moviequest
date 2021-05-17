@@ -31,7 +31,7 @@ export const extractResult = (response = null) => {
   return response.results || [];
 };
 
-const doRequestV3 = async (uri, options) => {
+const doRequestV3 = async (uri, options = {}) => {
   try {
     let url = `${uri}?api_key=${API_KEY}`;
 
@@ -67,13 +67,22 @@ const doRequestV3 = async (uri, options) => {
  * @param str
  * @returns {Promise<any|null|{success: boolean}>}
  */
-export const doSearch = async (str = "") => {
+export const requestMultiSearch = async (str = "") => {
   if (!str) {
     // Empty query
     return { success: false };
   }
   const uri = getUriEndpoint(CONSTANTS.TMDB.ENDPOINTS.MULTI_SEARCH);
   return await doRequestV3(uri, { query: str, page: 1, include_adult: false });
+};
+
+export const requestActors = async movieID => {
+  if (!movieID) {
+    // Empty query
+    return { success: false };
+  }
+  const uri = getUriEndpoint(CONSTANTS.TMDB.ENDPOINTS.ACTORS, { id: movieID });
+  return await doRequestV3(uri);
 };
 
 /**

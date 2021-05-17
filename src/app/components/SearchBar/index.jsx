@@ -1,7 +1,7 @@
 import { Container } from "./styles";
 import { Button, Form, FormControl, Nav, Navbar } from "react-bootstrap";
 import { useContext, useEffect, useState } from "react";
-import { doSearch, extractResult } from "../../helpers/tmdb";
+import { requestMultiSearch, extractResult } from "../../helpers/tmdb";
 import DataContext from "../../context/DataContext";
 import { BrowserRouter, Link } from "react-router-dom";
 
@@ -35,7 +35,7 @@ function SearchBar() {
       return;
     }
 
-    doSearch(searchPhrase)
+    requestMultiSearch(searchPhrase)
       .then(populatePage)
       .catch(e => console.error(e));
 
