@@ -14,9 +14,9 @@ function PageResults() {
         <div className="row">
           {entries.length ? (
             entries.map((entry, index) => (
-              <div key={`item-${index}`} className="card-wrapper col-sm-te6x col-md-4 col-xl-2">
+              <div key={`${entry.id}`} className="card-wrapper col-sm-te6x col-md-4 col-xl-2">
                 <Card title={JSON.stringify(entry, null, 2)}>
-                  <Link to={`/details?id=${entry.id}`} query={{ id: 323243 }}>
+                  <Link to={`/details?id=${entry.id}`} query={`${entry.id}`}>
                     <Card.Img
                       variant="top"
                       alt="No Image Available"
