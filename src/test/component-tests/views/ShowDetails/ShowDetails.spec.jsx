@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { waitFor } from "@testing-library/react";
-import PageDetails from "../../../../app/views/PageDetails";
+import ShowDetails from "../../../../app/views/ShowDetails";
 import fetchMock from "jest-fetch-mock";
 fetchMock.enableMocks();
 
@@ -54,13 +54,13 @@ const mockedResponse = {
   vote_count: 21765,
 };
 
-// Mock useLocation() for initialising the id required by the PageDetails component
+// Mock useLocation() for initialising the id required by the ShowDetails component
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
-  useLocation: () => ({ pathname: "/details", search: `?id=299536`, hash: "" }),
+  useLocation: () => ({ pathname: "/showdetails", search: `?id=299536`, hash: "" }),
 }));
 
-describe("The PageDetails view", () => {
+describe("The ShowDetails view", () => {
   beforeAll(() => {
     fetchMock.resetMocks();
   });
@@ -68,7 +68,7 @@ describe("The PageDetails view", () => {
   it("should display a detailed page when the id of the entity is given in the URL", async () => {
     // eslint-disable-next-line compat/compat
     fetch.mockResolvedValueOnce({ json: () => mockedResponse });
-    render(<PageDetails />);
+    render(<ShowDetails />);
     await waitFor(() => {
       expect(screen.getByText("Avengers: Infinity War")).toBeInTheDocument();
     });

@@ -18,7 +18,7 @@ function renderPage(entries) {
 describe("The PageResults view", () => {
   it("should display No result when no results are returned", () => {
     renderPage({ entries: [] });
-    const element = screen.getByText("No result");
+    const element = screen.getByText("No results");
     expect(element).toBeInTheDocument();
   });
 

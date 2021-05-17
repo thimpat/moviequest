@@ -33,10 +33,15 @@ export const extractResult = (response = null) => {
 
 const doRequestV3 = async (uri, options = {}) => {
   try {
+    if (!uri) {
+      return { success: false };
+    }
+
     let url = `${uri}?api_key=${API_KEY}`;
 
     if (options.query) {
       url += `&query=${options.query}`;
+      url = encodeURI(url);
     }
 
     if (options.page) {
@@ -51,7 +56,7 @@ const doRequestV3 = async (uri, options = {}) => {
     const response = await fetch(url);
 
     if (!response) {
-      return null;
+      return { success: false };
     }
 
     return response.json();
@@ -59,7 +64,7 @@ const doRequestV3 = async (uri, options = {}) => {
     console.error(e);
   }
 
-  return null;
+  return { success: false };
 };
 
 /**
@@ -68,21 +73,31 @@ const doRequestV3 = async (uri, options = {}) => {
  * @returns {Promise<any|null|{success: boolean}>}
  */
 export const requestMultiSearch = async (str = "") => {
-  if (!str) {
-    // Empty query
-    return { success: false };
-  }
   const uri = getUriEndpoint(CONSTANTS.TMDB.ENDPOINTS.MULTI_SEARCH);
   return await doRequestV3(uri, { query: str, page: 1, include_adult: false });
 };
 
-export const requestActors = async movieID => {
-  if (!movieID) {
-    // Empty query
-    return { success: false };
-  }
-  const uri = getUriEndpoint(CONSTANTS.TMDB.ENDPOINTS.ACTORS, { id: movieID });
+export const requestActors = async personID => {
+  const uri = getUriEndpoint(CONSTANTS.TMDB.ENDPOINTS.ACTORS_IN_THIS_SHOW, { id: personID });
   return await doRequestV3(uri);
+};
+
+export const requestMovies = async movieID => {
+  const uri = getUriEndpoint(CONSTANTS.TMDB.ENDPOINTS.SHOWS_FOR_THIS_ACTOR, { id: movieID });
+  const res = await doRequestV3(uri);
+  return res;
+};
+
+/**
+ * Return image url from TMDB' server
+ * @param id
+ * @returns {string}
+ */
+export const getImageUrl = id => {
+  if (!id) {
+    return "/puzzle-693873_640.jpg";
+  }
+  return `${CONSTANTS.TMDB.IMAGE_LINK_BASE}/${id}`;
 };
 
 /**
@@ -96,6 +111,15 @@ export const requestMovieDetails = async (id = null) => {
     return { success: false };
   }
   const uri = getUriEndpoint(CONSTANTS.TMDB.ENDPOINTS.MOVIE_DETAILS, { id });
+  return await doRequestV3(uri, {});
+};
+
+export const requestActorDetails = async (id = null) => {
+  if (!id) {
+    // Empty query
+    return { success: false };
+  }
+  const uri = getUriEndpoint(CONSTANTS.TMDB.ENDPOINTS.ACTOR_DETAILS, { id });
   const res = await doRequestV3(uri, {});
   return res;
 };
