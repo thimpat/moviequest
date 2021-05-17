@@ -50,6 +50,10 @@ const doRequestV3 = async (uri, options) => {
     // eslint-disable-next-line compat/compat
     const response = await fetch(url);
 
+    if (!response) {
+      return null;
+    }
+
     return response.json();
   } catch (e) {
     console.error(e);
@@ -77,7 +81,12 @@ export const doSearch = async (str = "") => {
  * https://api.themoviedb.org/3/movie/223291?api_key=0814fa5dfd6ac4b485ec5ed13f7eabdd&language=en-US
  * @param id
  */
-export const requestMovieDetails = async id => {
+export const requestMovieDetails = async (id = null) => {
+  if (!id) {
+    // Empty query
+    return { success: false };
+  }
   const uri = getUriEndpoint(CONSTANTS.TMDB.ENDPOINTS.MOVIE_DETAILS, { id });
-  return await doRequestV3(uri, {});
+  const res = await doRequestV3(uri, {});
+  return res;
 };

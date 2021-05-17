@@ -23,7 +23,7 @@ describe("The PageResults view", () => {
   });
 
   it("should display two card when some results are returned", () => {
-    const responseServer = {
+    const mockedResponse = {
       page: 2,
       results: [
         {
@@ -65,7 +65,7 @@ describe("The PageResults view", () => {
       total_results: 60,
     };
 
-    renderPage({ entries: responseServer.results });
+    renderPage({ entries: mockedResponse.results });
     const element = screen.getByText("Alien Avengers II");
     expect(element).toBeInTheDocument();
   });

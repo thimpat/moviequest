@@ -14,14 +14,10 @@ function PageDetails() {
   const [entry, setEntry] = useState({});
 
   const populatePage = data => {
-    setEntry(data);
-    console.log(`Data: `, data);
+    setEntry(() => data);
   };
 
   useEffect(() => {
-    if (!idMovie) {
-      return;
-    }
     requestMovieDetails(idMovie)
       .then(populatePage)
       .catch(e => console.error(e));
