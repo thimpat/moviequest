@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "./styles";
 import { useLocation } from "react-router-dom";
-import { requestMovieDetails } from "../../helpers/tmdb";
+import { requestActors, requestMovieDetails } from "../../helpers/tmdb";
 import { Card, Table } from "react-bootstrap";
 
 function PageDetails() {
@@ -12,14 +12,23 @@ function PageDetails() {
 
   const [idMovie] = useState(id);
   const [entry, setEntry] = useState({});
+  const [cast, setCast] = useState([]);
 
-  const populatePage = data => {
-    setEntry(() => data);
+  const populateInfoMovie = data => {
+    setEntry(() => data || {});
+  };
+
+  const populateActorList = data => {
+    setCast(data.cast || []);
   };
 
   useEffect(() => {
     requestMovieDetails(idMovie)
-      .then(populatePage)
+      .then(populateInfoMovie)
+      .catch(e => console.error(e));
+
+    requestActors(idMovie)
+      .then(populateActorList)
       .catch(e => console.error(e));
   }, [idMovie]);
 
@@ -41,29 +50,52 @@ function PageDetails() {
 
       <div className="container-content">
         <h1>{entry.original_title}</h1>
-
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>&nbsp;</th>
-              <th>Key</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(entry)
-              .filter(k => {
-                return typeof k !== "object";
-              })
-              .map((keyName, index) => (
+        <div className="table-1">
+          <Table className="table-details" striped bordered hover>
+            <thead>
+              <tr>
+                <th>&nbsp;</th>
+                <th>Properties</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(entry)
+                .filter(k => {
+                  return typeof k !== "object";
+                })
+                .map((keyName, index) => (
+                  <tr key={index}>
+                    <td>{index}</td>
+                    <td>{keyName}</td>
+                    <td>{JSON.stringify(entry[keyName])}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </div>
+        <div className="table-2">
+          <Table className="table-cast" striped bordered hover>
+            <thead>
+              <tr>
+                <th>&nbsp;</th>
+                <th>Character</th>
+                <th>Name</th>
+                <th>Image</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cast.map((actor, index) => (
                 <tr key={index}>
                   <td>{index}</td>
-                  <td>{keyName}</td>
-                  <td>{JSON.stringify(entry[keyName])}</td>
+                  <td>{actor.character}</td>
+                  <td>{actor.name}</td>
+                  <td>{actor.profile_path}</td>
                 </tr>
               ))}
-          </tbody>
-        </Table>
+            </tbody>
+          </Table>
+        </div>
       </div>
     </Container>
   );

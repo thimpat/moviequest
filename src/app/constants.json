@@ -2,6 +2,7 @@
   "TMDB": {
     "ENDPOINTS": {
       "MULTI_SEARCH": "search/multi",
+      "ACTORS": "/movie/:id/credits",
       "MOVIE_DETAILS": "movie/:id"
     }
   }

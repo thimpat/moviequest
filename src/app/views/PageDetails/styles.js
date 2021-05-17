@@ -24,8 +24,16 @@ export const Container = styled.div`
     }
   }
 
+  .table-1,
+  .table-2 {
+    height: 200px;
+    margin: 20px auto;
+    overflow: auto;
+    min-width: 60%;
+    width: 60%;
+  }
+
   .table {
     margin: auto;
-    max-width: 300px;
   }
 `;
