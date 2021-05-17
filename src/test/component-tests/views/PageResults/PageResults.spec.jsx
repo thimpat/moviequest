@@ -3,11 +3,14 @@ import { render, screen } from "@testing-library/react";
 
 import DataContext from "../../../../app/context/DataContext";
 import PageResults from "../../../../app/views/PageResults";
+import { BrowserRouter } from "react-router-dom";
 
 function renderPage(entries) {
   return render(
     <DataContext.Provider value={entries}>
-      <PageResults />
+      <BrowserRouter>
+        <PageResults />
+      </BrowserRouter>
     </DataContext.Provider>
   );
 }
