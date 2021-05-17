@@ -1,8 +1,11 @@
 {
   "TMDB": {
+    "IMAGE_LINK_BASE": "https://image.tmdb.org/t/p/original",
     "ENDPOINTS": {
       "MULTI_SEARCH": "search/multi",
-      "ACTORS": "/movie/:id/credits",
+      "ACTORS_IN_THIS_SHOW": "/movie/:id/credits",
+      "SHOWS_FOR_THIS_ACTOR": "/person/:id/combined_credits",
+      "ACTOR_DETAILS": "/person/:id",
       "MOVIE_DETAILS": "movie/:id"
     }
   }

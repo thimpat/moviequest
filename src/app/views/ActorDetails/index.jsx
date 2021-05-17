@@ -1,55 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "./styles";
-import { useLocation } from "react-router-dom";
-import { requestActors, requestMovieDetails } from "../../helpers/tmdb";
+import { Link, useLocation } from "react-router-dom";
+import { getImageUrl, requestActorDetails, requestMovies } from "../../helpers/tmdb";
 import { Card, Table } from "react-bootstrap";
+import { getDetailsPage } from "../../helpers/utils";
 
-function PageDetails() {
+function ActorDetails() {
   const location = useLocation();
   // eslint-disable-next-line compat/compat
   const urlParams = new URLSearchParams(location.search);
   const id = urlParams.get("id");
 
-  const [idMovie] = useState(id);
+  const [idActor] = useState(id);
   const [entry, setEntry] = useState({});
   const [cast, setCast] = useState([]);
 
-  const populateInfoMovie = data => {
+  const populateInfoActor = data => {
     setEntry(() => data || {});
   };
 
-  const populateActorList = data => {
+  const populateMovieList = data => {
     setCast(data.cast || []);
   };
 
   useEffect(() => {
-    requestMovieDetails(idMovie)
-      .then(populateInfoMovie)
+    requestActorDetails(idActor)
+      .then(populateInfoActor)
       .catch(e => console.error(e));
 
-    requestActors(idMovie)
-      .then(populateActorList)
+    requestMovies(idActor)
+      .then(populateMovieList)
       .catch(e => console.error(e));
-  }, [idMovie]);
+  }, [idActor]);
 
   return (
     <Container>
       <div className="container-media">
         <Card title={JSON.stringify(entry, null, 2)}>
-          <Card.Img
-            variant="top"
-            alt="No Image Available"
-            src={
-              entry.poster_path
-                ? `https:\\image.tmdb.org/t/p/original/${entry.poster_path}`
-                : "/puzzle-693873_640.jpg"
-            }
-          />
+          <Card.Img variant="top" alt="" src={getImageUrl(entry.profile_path)} />
         </Card>
       </div>
 
       <div className="container-content">
-        <h1>{entry.original_title}</h1>
+        <h1>{entry.name}</h1>
         <div className="table-1">
           <Table className="table-details" striped bordered hover>
             <thead>
@@ -79,18 +72,30 @@ function PageDetails() {
             <thead>
               <tr>
                 <th>&nbsp;</th>
-                <th>Character</th>
-                <th>Name</th>
-                <th>Image</th>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>&nbsp;</th>
               </tr>
             </thead>
             <tbody>
-              {cast.map((actor, index) => (
-                <tr key={index}>
+              {cast.map((show, index) => (
+                <tr key={index} title={JSON.stringify(show)}>
                   <td>{index}</td>
-                  <td>{actor.character}</td>
-                  <td>{actor.name}</td>
-                  <td>{actor.profile_path}</td>
+                  <td>
+                    <Link to={getDetailsPage(show.id, "show")}>{show.title}</Link>
+                  </td>
+                  <td>
+                    <Link to={getDetailsPage(show.id, "show")}>{show.release_date}</Link>
+                  </td>
+                  <td>
+                    <Link to={getDetailsPage(show.id, "show")}>
+                      <img
+                        className="img-thumbnail"
+                        alt="No Image Available"
+                        src={getImageUrl(cast.poster_path)}
+                      />
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -101,4 +106,4 @@ function PageDetails() {
   );
 }
 
-export default PageDetails;
+export default ActorDetails;

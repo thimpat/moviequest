@@ -49,7 +49,7 @@ function SearchBar() {
       <Navbar bg="light" expand="lg">
         <Navbar.Brand id="app-name">
           <BrowserRouter>
-            <Link to="/">Movie Quest</Link>
+            <a href="/">Movie Quest</a>
           </BrowserRouter>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

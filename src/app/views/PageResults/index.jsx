@@ -5,6 +5,9 @@ import DataContext from "../../context/DataContext";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import { getImageUrl } from "../../helpers/tmdb";
+import { getDetailsPage } from "../../helpers/utils";
+
 function PageResults() {
   const { entries } = useContext(DataContext);
 
@@ -23,18 +26,14 @@ function PageResults() {
                 .filter(entry => {
                   return entry.media_type === "movie" || entry.media_type === "tv";
                 })
-                .map(entry => (
-                  <div key={`${entry.id}`} className="card-wrapper col-sm-te6x col-md-4 col-xl-3">
+                .map((entry, index) => (
+                  <div key={`show-${index}`} className="card-wrapper col-sm-te6x col-md-4 col-xl-3">
                     <Card title={JSON.stringify(entry, null, 2)}>
-                      <Link to={`/details?id=${entry.id}`} query={`${entry.id}`}>
+                      <Link to={getDetailsPage(entry.id, "show")}>
                         <Card.Img
                           variant="top"
                           alt="No Image Available"
-                          src={
-                            entry.poster_path
-                              ? `https:\\image.tmdb.org/t/p/original/${entry.poster_path}`
-                              : "/puzzle-693873_640.jpg"
-                          }
+                          src={getImageUrl(entry.poster_path)}
                         />
                       </Link>
                       <Card.Body>
@@ -54,23 +53,22 @@ function PageResults() {
                 .filter(entry => {
                   return !(entry.media_type === "movie" || entry.media_type === "tv");
                 })
-                .map(entry => (
-                  <div key={`${entry.id}`} className="card-wrapper col-sm-te6x col-md-4 col-xl-2">
+                .map((entry, index) => (
+                  <div
+                    key={`actor-${index}`}
+                    className="card-wrapper col-sm-te6x col-md-4 col-xl-2"
+                  >
                     <Card title={JSON.stringify(entry, null, 2)}>
-                      <Link to={`/details?id=${entry.id}`} query={`${entry.id}`}>
+                      <Link to={getDetailsPage(entry.id, "actor")}>
                         <Card.Img
                           variant="top"
                           alt="No Image Available"
-                          src={
-                            entry.profile_path
-                              ? `https:\\image.tmdb.org/t/p/original/${entry.profile_path}`
-                              : "/puzzle-693873_640.jpg"
-                          }
+                          src={getImageUrl(entry.profile_path)}
                         />
                       </Link>
                       <Card.Body>
                         <Card.Title>{entry.name}</Card.Title>
-                        <Card.Text>{entry.gender ? "Male" : "Female"}</Card.Text>
+                        <Card.Text>{entry.biography}</Card.Text>
                       </Card.Body>
                     </Card>
                   </div>

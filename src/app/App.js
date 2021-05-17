@@ -1,10 +1,11 @@
 import "./App.css";
 import SearchBar from "./components/SearchBar";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 import PageResults from "./views/PageResults";
+import ActorDetails from "./views/ActorDetails";
 import DataContext from "./context/DataContext";
 import { useState } from "react";
-import PageDetails from "./views/PageDetails";
+import ShowDetails from "./views/ShowDetails";
 
 function App() {
   const [entries, setEntries] = useState([]);
@@ -19,17 +20,19 @@ function App() {
         setTotalEntries,
       }}
     >
-      <Router>
+      <BrowserRouter>
         <div className="App">
           <header className="App-header">
             <SearchBar />
           </header>
           <Switch>
-            <Route path="/details" component={PageDetails} />
             <Route exact path="/" component={PageResults} />
+            <Route exact path="/home" component={PageResults} />
+            <Route path="/showdetails" component={ShowDetails} />
+            <Route path="/actordetails" component={ActorDetails} />
           </Switch>
         </div>
-      </Router>
+      </BrowserRouter>
     </DataContext.Provider>
   );
 }
