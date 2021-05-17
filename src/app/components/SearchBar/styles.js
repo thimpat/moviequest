@@ -4,10 +4,9 @@ export const Container = styled.div`
   width: 100%;
 
   .navbar {
-    background: #282c34 !important /** Override Bootstrap 4 **/;
+    background: rgb(40 44 52 / 83%) !important /** Override Bootstrap 4 **/;
 
     .navbar-toggler.collapsed {
-      background: #d0d0d0;
       position: absolute;
       right: 20px;
     }
