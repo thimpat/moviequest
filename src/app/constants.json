@@ -1,7 +1,8 @@
 {
   "TMDB": {
     "ENDPOINTS": {
-      "MULTI_SEARCH": "search/multi"
+      "MULTI_SEARCH": "search/multi",
+      "MOVIE_DETAILS": "movie/:id"
     }
   }
 }

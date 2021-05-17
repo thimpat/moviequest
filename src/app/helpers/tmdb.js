@@ -1,10 +1,14 @@
 import CONSTANTS from "../constants.json";
 
-const API_KEY = "0814fa5dfd6ac4b485ec5ed13f7eabdd";
+const API_KEY = "";
 
-export const getUriEndpoint = (endpointName = "", apiVersion = 3) => {
+export const getUriEndpoint = (endpointName = "", { id } = { id: null }, apiVersion = 3) => {
   if (!endpointName) {
     return "";
+  }
+
+  if (id !== null) {
+    endpointName = endpointName.replace(/\:id/g, id);
   }
 
   const prefix = `https://api.themoviedb.org/${apiVersion}`;
@@ -29,9 +33,19 @@ export const extractResult = (response = null) => {
 
 const doRequestV3 = async (uri, options) => {
   try {
-    const url = `${uri}?api_key=${API_KEY}&page=2&include_adult=${
-      options.include_adult ? "true" : "false"
-    }&query=${options.query}`;
+    let url = `${uri}?api_key=${API_KEY}`;
+
+    if (options.query) {
+      url += `&query=${options.query}`;
+    }
+
+    if (options.page) {
+      url += `&page=${options.page}`;
+    }
+
+    if (options.include_adult !== undefined) {
+      url += `&include_adult=${options.include_adult ? "true" : "false"}`;
+    }
 
     // eslint-disable-next-line compat/compat
     const response = await fetch(url);
@@ -44,12 +58,26 @@ const doRequestV3 = async (uri, options) => {
   return null;
 };
 
+/**
+ * `${uri}?api_key=0814fa5dfd6ac4b485ec5ed13f7eabdd&language=en-US&query=avengers&page=1&include_adult=true`;
+ * @param str
+ * @returns {Promise<any|null|{success: boolean}>}
+ */
 export const doSearch = async (str = "") => {
   if (!str) {
     // Empty query
     return { success: false };
   }
   const uri = getUriEndpoint(CONSTANTS.TMDB.ENDPOINTS.MULTI_SEARCH);
-  `${uri}?api_key=0814fa5dfd6ac4b485ec5ed13f7eabdd&language=en-US&query=avengers&page=1&include_adult=true`;
   return await doRequestV3(uri, { query: str, page: 1, include_adult: false });
+};
+
+/**
+ * NOTE: Look Like
+ * https://api.themoviedb.org/3/movie/223291?api_key=0814fa5dfd6ac4b485ec5ed13f7eabdd&language=en-US
+ * @param id
+ */
+export const requestMovieDetails = async id => {
+  const uri = getUriEndpoint(CONSTANTS.TMDB.ENDPOINTS.MOVIE_DETAILS, { id });
+  return await doRequestV3(uri, {});
 };

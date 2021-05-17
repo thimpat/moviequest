@@ -3,6 +3,7 @@ import { Button, Form, FormControl, Nav, Navbar } from "react-bootstrap";
 import { useContext, useEffect, useState } from "react";
 import { doSearch, extractResult } from "../../helpers/tmdb";
 import DataContext from "../../context/DataContext";
+import { BrowserRouter, Link } from "react-router-dom";
 
 function SearchBar() {
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -46,7 +47,11 @@ function SearchBar() {
   return (
     <Container>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand id="app-name">Movie Quest</Navbar.Brand>
+        <Navbar.Brand id="app-name">
+          <BrowserRouter>
+            <Link to="/">Movie Quest</Link>
+          </BrowserRouter>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Nav.Link>{isSearchInitiated ? `Searching... ${currentTextBoxContent}` : ""}</Nav.Link>
         <Navbar.Collapse>
