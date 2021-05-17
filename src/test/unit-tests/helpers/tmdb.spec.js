@@ -1,4 +1,9 @@
-import { doSearch, extractResult, getUriEndpoint } from "../../../app/helpers/tmdb";
+import {
+  requestMultiSearch,
+  extractResult,
+  getUriEndpoint,
+  requestMovieDetails,
+} from "../../../app/helpers/tmdb";
 import CONSTANTS from "../../../app/constants.json";
 
 describe("tmdb helpers", () => {
@@ -90,16 +95,29 @@ describe("tmdb helpers", () => {
     });
   });
 
-  describe("#doSearch()", () => {
+  describe("#requestMultiSearch()", () => {
     it(`should return an empty object when no search terms are given`, async () => {
-      const result = await doSearch();
+      const result = await requestMultiSearch();
       expect(result.success).toBeFalsy();
     });
 
     it(`should invoked the search server with the correct parameter`, async () => {
-      await doSearch("Avengers");
+      await requestMultiSearch("Avengers");
       expect(fetch).toHaveBeenCalledWith(
         "https://api.themoviedb.org/3/search/multi?api_key=0814fa5dfd6ac4b485ec5ed13f7eabdd&query=Avengers&page=1&include_adult=false"
+      );
+    });
+  });
+  describe("#requestMovieDetails()", () => {
+    it(`should return an empty object when no search terms are given`, async () => {
+      const result = await requestMovieDetails();
+      expect(result.success).toBeFalsy();
+    });
+
+    it(`should invoked the search server with the correct parameter`, async () => {
+      await requestMovieDetails(299536);
+      expect(fetch).toHaveBeenCalledWith(
+        "https://api.themoviedb.org/3/movie/299536?api_key=0814fa5dfd6ac4b485ec5ed13f7eabdd"
       );
     });
   });
