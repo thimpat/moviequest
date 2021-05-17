@@ -3,6 +3,7 @@ import { Container } from "./styles";
 
 import DataContext from "../../context/DataContext";
 import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function PageResults() {
   const { entries } = useContext(DataContext);
@@ -14,16 +15,18 @@ function PageResults() {
           {entries.length ? (
             entries.map((entry, index) => (
               <div key={`item-${index}`} className="card-wrapper col-sm-te6x col-md-4 col-xl-2">
-                <Card>
-                  <Card.Img
-                    variant="top"
-                    alt="No Image Available"
-                    src={
-                      entry.poster_path
-                        ? `https:\\image.tmdb.org/t/p/original/${entry.poster_path}`
-                        : "/puzzle-693873_640.jpg"
-                    }
-                  />
+                <Card title={JSON.stringify(entry, null, 2)}>
+                  <Link to={`/details?id=${entry.id}`} query={{ id: 323243 }}>
+                    <Card.Img
+                      variant="top"
+                      alt="No Image Available"
+                      src={
+                        entry.poster_path
+                          ? `https:\\image.tmdb.org/t/p/original/${entry.poster_path}`
+                          : "/puzzle-693873_640.jpg"
+                      }
+                    />
+                  </Link>
                   <Card.Body>
                     <Card.Title>{entry.original_title}</Card.Title>
                     <Card.Text>{entry.overview}</Card.Text>

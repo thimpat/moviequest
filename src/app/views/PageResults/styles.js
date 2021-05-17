@@ -17,6 +17,8 @@ export const Container = styled.div`
       width: 100%;
 
       img {
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25), 0 3px 10px 0 rgba(0, 0, 0, 0.2) !important;
+        border-radius: 0.25rem;
         object-fit: cover;
         width: 100%;
         height: 250px;

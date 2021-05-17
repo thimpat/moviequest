@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PageResults from "./views/PageResults";
 import DataContext from "./context/DataContext";
 import { useState } from "react";
+import PageDetails from "./views/PageDetails";
 
 function App() {
   const [entries, setEntries] = useState([]);
@@ -24,9 +25,8 @@ function App() {
             <SearchBar />
           </header>
           <Switch>
-            <Route path="/">
-              <PageResults />
-            </Route>
+            <Route path="/details" component={PageDetails} />
+            <Route exact path="/" component={PageResults} />
           </Switch>
         </div>
       </Router>
