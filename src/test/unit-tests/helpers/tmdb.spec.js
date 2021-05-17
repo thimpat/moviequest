@@ -99,7 +99,7 @@ describe("tmdb helpers", () => {
     it(`should invoked the search server with the correct parameter`, async () => {
       await doSearch("Avengers");
       expect(fetch).toHaveBeenCalledWith(
-        "https://api.themoviedb.org/3/search/multi?api_key=0814fa5dfd6ac4b485ec5ed13f7eabdd&page=2&include_adult=false&query=Avengers"
+        "https://api.themoviedb.org/3/search/multi?api_key=0814fa5dfd6ac4b485ec5ed13f7eabdd&query=Avengers&page=1&include_adult=false"
       );
     });
   });
