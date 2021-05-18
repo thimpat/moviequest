@@ -9,7 +9,7 @@ import { getImageUrl } from "../../helpers/tmdb";
 import { getDetailsPage } from "../../helpers/utils";
 
 function PageResults() {
-  const { entries } = useContext(DataContext);
+  const { entries, selectedFilter } = useContext(DataContext);
 
   return (
     <Container>
@@ -24,7 +24,36 @@ function PageResults() {
               </div>
               {entries
                 .filter(entry => {
-                  return entry.media_type === "movie" || entry.media_type === "tv";
+                  if (selectedFilter && selectedFilter !== 2) {
+                    return false;
+                  }
+                  return entry.media_type === "movie";
+                })
+                .map((entry, index) => (
+                  <div key={`show-${index}`} className="card-wrapper col-sm-te6x col-md-4 col-xl-3">
+                    <Card title={JSON.stringify(entry, null, 2)}>
+                      <Link to={getDetailsPage(entry.id, "show")}>
+                        <Card.Img
+                          variant="top"
+                          alt="No Image Available"
+                          src={getImageUrl(entry.poster_path)}
+                        />
+                      </Link>
+                      <Card.Body>
+                        <Card.Title>{entry.original_title}</Card.Title>
+                        <Card.Text>{entry.overview}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </div>
+                ))}
+            </div>
+            <div className="row">
+              {entries
+                .filter(entry => {
+                  if (selectedFilter && selectedFilter !== 3) {
+                    return false;
+                  }
+                  return entry.media_type === "tv";
                 })
                 .map((entry, index) => (
                   <div key={`show-${index}`} className="card-wrapper col-sm-te6x col-md-4 col-xl-3">
@@ -51,6 +80,9 @@ function PageResults() {
               </div>
               {entries
                 .filter(entry => {
+                  if (selectedFilter && selectedFilter !== 1) {
+                    return false;
+                  }
                   return !(entry.media_type === "movie" || entry.media_type === "tv");
                 })
                 .map((entry, index) => (
