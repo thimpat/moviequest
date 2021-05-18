@@ -32,15 +32,13 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "flow-remove-types": "^2.151.0",
     "node-sass": "4.14.1",
     "prettier": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "alternate-start": "cross-env PORT=80 react-scripts start",
-    "prepublish": "react-scripts build",
-    "build": "flow-remove-types src/ -d lib/",
+    "build": "react-scripts build",
     "test:components": "react-scripts test --coverage --watchAll=false",
     "test": "yarn run test:components",
     "eject": "react-scripts eject",
@@ -65,7 +63,6 @@
     ]
   },
   "jest": {
-
     "coveragePathIgnorePatterns": [
       "<rootDir>/src/index.js",
       "src/reportWebVitals.js"
