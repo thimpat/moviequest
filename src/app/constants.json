@@ -1,4 +1,7 @@
 {
+  "APP": {
+    "TYPING_TIMEOUT_SUGGESTION": 500
+  },
   "TMDB": {
     "IMAGE_LINK_BASE": "https://image.tmdb.org/t/p/original",
     "ENDPOINTS": {
