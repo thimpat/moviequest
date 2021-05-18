@@ -3,7 +3,7 @@ import { Button, Dropdown, Form, FormControl, Nav, Navbar, Spinner, Table } from
 import { useContext, useEffect, useState } from "react";
 import { requestMultiSearch, extractResult } from "../../helpers/tmdb";
 import DataContext from "../../context/DataContext";
-import { BrowserRouter, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import CONSTANT from "../../constants.json";
 import { getDetailsPage } from "../../helpers/utils";
 
@@ -43,6 +43,7 @@ function SearchBar() {
 
   const gotoDetailPage = url => {
     setTimeout(() => {
+      history.push("/");
       history.push(url);
     }, 100);
   };
@@ -101,6 +102,8 @@ function SearchBar() {
     if (!isSearchInitiated) {
       return;
     }
+
+    history.push("/");
 
     requestMultiSearch(searchPhrase)
       .then(populatePage)
