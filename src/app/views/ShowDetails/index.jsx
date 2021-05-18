@@ -12,7 +12,7 @@ function ShowDetails() {
   const urlParams = new URLSearchParams(location.search);
   const id = urlParams.get("id");
 
-  const [idMovie] = useState(id);
+  const [idMovie, setIdMovie] = useState(id);
   const [entry, setEntry] = useState({});
   const [cast, setCast] = useState([]);
 
