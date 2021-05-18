@@ -4,8 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import { requestMultiSearch, extractResult } from "../../helpers/tmdb";
 import DataContext from "../../context/DataContext";
 import { BrowserRouter } from "react-router-dom";
+import CONSTANT from "../../constants.json";
 
 const filteringOptions = ["No Filter", "Actors only", "Movies only", "TV Shows only"];
+let timerID = 0;
+const timeout = CONSTANT.APP.TYPING_TIMEOUT_SUGGESTION;
 
 function SearchBar() {
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -36,6 +39,31 @@ function SearchBar() {
 
   const onChangeFilter = index => {
     setSelectedFilter(index);
+  };
+
+  const showSuggestions = response => {
+    let suggestions = [];
+    if (response) {
+      response.results.map(entry => {
+        suggestions.push(entry.title || entry.name);
+      });
+    }
+  };
+
+  const onUpdateSearchBox = e => {
+    const content = e.target.value || "";
+    clearTimeout(timerID);
+
+    timerID = setTimeout(() => {
+      if (content.length < 5) {
+        return;
+      }
+      requestMultiSearch(searchPhrase)
+        .then(showSuggestions)
+        .catch(e => console.error(e));
+    }, timeout);
+
+    setSearchPhrase(content);
   };
 
   useEffect(() => {
@@ -102,7 +130,7 @@ function SearchBar() {
               type="text"
               placeholder="Search"
               className="mr-sm-2"
-              onChange={e => setSearchPhrase(e.target.value)}
+              onChange={onUpdateSearchBox}
               onKeyDown={onKeyDown}
             />
             <Button

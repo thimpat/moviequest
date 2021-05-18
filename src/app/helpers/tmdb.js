@@ -1,6 +1,6 @@
 import CONSTANTS from "../constants.json";
 
-const API_KEY = "0814fa5dfd6ac4b485ec5ed13f7eabdd";
+const API_KEY = "";
 
 export const getUriEndpoint = (endpointName = "", { id } = { id: null }, apiVersion = 3) => {
   if (!endpointName) {
