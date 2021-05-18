@@ -1,6 +1,6 @@
 import "./App.css";
 import SearchBar from "./components/SearchBar";
-import { BrowserRouter as Router, Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
 import PageResults from "./views/PageResults";
 import ActorDetails from "./views/ActorDetails";
 import DataContext from "./context/DataContext";
@@ -10,6 +10,7 @@ import ShowDetails from "./views/ShowDetails";
 function App() {
   const [entries, setEntries] = useState([]);
   const [totalEntries, setTotalEntries] = useState(0);
+  const [selectedFilter, setSelectedFilter] = useState(0);
 
   return (
     <DataContext.Provider
@@ -18,6 +19,8 @@ function App() {
         setEntries,
         totalEntries,
         setTotalEntries,
+        selectedFilter,
+        setSelectedFilter,
       }}
     >
       <BrowserRouter>
