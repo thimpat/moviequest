@@ -13,7 +13,30 @@ export const Container = styled.div`
 
     .navbar-brand {
       color: #dcd8d8;
+      cursor: pointer;
       user-select: contain;
+    }
+  }
+
+  .table {
+    font-size: 12px;
+    line-height: 8px;
+    position: absolute;
+    top: 48px;
+    max-width: 203px;
+    right: 95px;
+    tr {
+      cursor: default;
+      height: 16px;
+      line-height: 16px;
+      td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        a {
+          color: #c7ccd2;
+        }
+      }
     }
   }
 `;
