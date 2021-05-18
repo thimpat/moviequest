@@ -1,3 +1,5 @@
+# The API_KEY has to be set in the tmdb.js file.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
